@@ -1,4 +1,4 @@
-import harmonodeParser from "../utils/parseUtil.js";
+import harmonodeParser from "../utils/parseUtil1.js";
 
 const code = `useEffect(() => {
     const getEngineersByJobSpeak = async () => {
@@ -13,8 +13,5 @@ const code = `useEffect(() => {
 
 }, [dash.clickedSpeak])`;
 
-const classes = `header ${
-  isLargeScreen() ? "" : `icon-${item.isCollapsed ? "expander" : "collapser"}`
-}`;
 
 console.log(harmonodeParser(code));

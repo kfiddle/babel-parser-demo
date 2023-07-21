@@ -15,7 +15,12 @@ const endPoints = (codeString) => {
         current.callee.object.name === "app" &&
         current.callee.property.name === "use"
       ) {
-        if (current.arguments[0].value) serverEndPoints.push(current.arguments[0].value);
+        if (current.arguments[0].value) {
+          serverEndPoints.push(current.arguments[0].value);
+          if (current.arguments[1]) {
+            console.log(current.arguments[1])
+          }
+        }
       }
     },
   });
