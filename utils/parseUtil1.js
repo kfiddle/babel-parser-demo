@@ -6,6 +6,7 @@ const harmonodeParser = (codeString) => {
   const ast = parse(codeString);
   const urlsList = [];
 
+  // * if in trouble, allScopedVars should be object, NOT array
   const allScopedVars = [];
 
   trav(ast, {
@@ -43,8 +44,7 @@ const harmonodeParser = (codeString) => {
         } else if (fetchArg.type === "TemplateLiteral") {
           urlsList.push(fetchArg.quasis[0].value.raw);
         } 
-        else urlsList.push(findOriginalVal(fetchArg.right.name));
-        // else console.log(fetchArg.right.name)
+        else urlsList.push(findOriginalVal(fetchArg.name));
       }
     },
   });

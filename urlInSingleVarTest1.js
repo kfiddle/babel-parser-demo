@@ -2,7 +2,7 @@ import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
 const trav = traverse.default;
 
-import harmonodeParser from "./utils/parseUtil.js";
+import harmonodeParser from "./utils/parseUtil1.js";
 
 const code = `
 const url = "localhost:3000/tim/sebastian/hamza/eric";

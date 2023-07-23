@@ -8,8 +8,8 @@ const trav = traverse.default;
 // const pizza = jellyroll;
 
 const code = `
-const bike = 'hamza';
-const newWord = bike;
+const devsRoutes = 'routes/devs';
+const newWord = devsRoutes;
 const thirdRef = newWord;
 const airplane = thirdRef;
 `;
@@ -33,20 +33,6 @@ trav(ast, {
 });
 
 console.log(allVarsAndAssings);
-
-// for (let key in allVarsAndAssings) {
-//   if (typeof allVarsAndAssings[key] === "object") {
-//     if (allVarsAndAssings[key].assignedVar in allVarsAndAssings) {
-//       const storedVar = allVarsAndAssings[key].assignedVar;
-//       console.log(
-//         "the original stored value of " +
-//           key +
-//           " is... " +
-//           allVarsAndAssings[storedVar]
-//       );
-//     }
-//   }
-// }
 
 const findOriginalVal = (variable) => {
   if (

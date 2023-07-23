@@ -16,10 +16,6 @@ const ast = parse(code);
 
 console.log(ast.program.body);
 
-// for (let line of ast.program.body) {
-//   if (line.type === "VariableDeclaration") console.log("one here");
-// }
-
 const allVarsAndAssings = [];
 
 trav(ast, {

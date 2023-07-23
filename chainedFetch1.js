@@ -4,4 +4,8 @@ const code = `
 fetch('pizzaendpoint').then(data => data.json())
 `;
 
-console.log(harmonodeParser(code));
+const code1 = `
+fetch('pizzabeerendpoint').then(data => data.json()).then(res => console.log(res)).catch(err => () => console.log(err));
+`;
+
+console.log(harmonodeParser(code1));
