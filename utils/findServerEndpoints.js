@@ -6,6 +6,7 @@ const trav = traverse.default;
 
 const endPoints = (codeString) => {
   const ast = parse(codeString);
+
   const serverEndPoints = [];
   const routesObj = {};
   const importedRoutes = {};
@@ -23,14 +24,13 @@ const endPoints = (codeString) => {
     },
   });
 
-
   const findOriginalVal = (variable) => {
     if (
       variable in importedRoutes &&
       typeof importedRoutes[variable] === "string"
     )
       return importedRoutes[variable];
-    return 'deadEnd';
+    return "deadEnd";
   };
 
   trav(ast, {
@@ -50,14 +50,13 @@ const endPoints = (codeString) => {
           ) {
             const nextInLine = current.arguments[1];
             serverEndPoints.push(findOriginalVal(current.arguments[1].name));
-            routesObj[nextInLine.name] = findOriginalVal(nextInLine.name)
+            routesObj[nextInLine.name] = findOriginalVal(nextInLine.name);
           }
         }
       }
     },
   });
 
-  // return serverEndPoints;
   return routesObj;
 };
 
