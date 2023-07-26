@@ -9,12 +9,12 @@ const getPathArray = (routeString) => {
 };
 
 const paths = [
-  ["asynFetch", "server", "server"],
-  ["asynFetch", "server", "routes", "devsRoutes"],
-  ["asynFetch", "server", "routes", "usersRoutes"],
-  ["asynFetch", "server", "controllers", "devsController"],
-  ["asynFetch", "client", "components", "app"],
-  ["asynFetch", "client", "components", "header"],
+  ["asyncFetch", "server", "server"],
+  ["asyncFetch", "server", "routes", "devsRoutes"],
+  ["asyncFetch", "server", "routes", "usersRoutes"],
+  ["asyncFetch", "server", "controllers", "devsController"],
+  ["asyncFetch", "client", "components", "app"],
+  ["asyncFetch", "client", "components", "header"],
 ];
 
 // './routes/usersRoutes'
@@ -23,16 +23,13 @@ const fullBackEndCreator = (originArr, destString) => {
   let pathToNewFile = [];
   let dots = 0;
 
-  // if (destPathArray[0] === "..") dots = -2;
-  // else if (destPathArray[0] === ".") dots = -1;
-  // else dots = 0;
-
   for (let el of destPathArray) {
-    if (el === '..') dots -= 2;
-    else if (el === '.') dots -= 1;
+    if (el === '..') {
+      dots === 0 ? dots -= 2 : dots -= 1;
+    } else if (el === '.') dots -= 1;
   }
 
-  pathToNewFile = [...originArr.slice(0, dots), ...destPathArray.slice(1)];
+  pathToNewFile = [...originArr.slice(0, dots), ...destPathArray.filter(el => !el.includes('.'))];
   for (let arr of paths) {
     if (path.join(...arr) === path.join(...pathToNewFile)) return arr;
   }
@@ -40,4 +37,4 @@ const fullBackEndCreator = (originArr, destString) => {
 };
 
 // export default fullBackEndCreator;
-console.log(fullBackEndCreator(paths[5], '.././client/components/app' ));
+console.log(fullBackEndCreator(paths[5], '../../../asyncFetch/client/components/app'));
