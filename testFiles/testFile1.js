@@ -1,4 +1,5 @@
 import harmonodeParser from "../utils/parseUtil1.js";
+// import fetchParser from "../utils/clientParserChatGpt.js";
 
 const code = `
     const getPlayers = async () => {
@@ -8,3 +9,4 @@ const code = `
 }`;
 
 console.log(harmonodeParser(code));
+// console.log(fetchParser(code))

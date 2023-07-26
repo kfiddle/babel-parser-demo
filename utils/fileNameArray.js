@@ -1,14 +1,43 @@
+import * as path from "path";
 
-import * as path from 'path';
+const getPathArray = (routeString) => {
+  const pathParts = routeString.split(path.sep);
+  const last = pathParts[pathParts.length - 1];
+  if (last.includes("."))
+    pathParts[pathParts.length - 1] = last.slice(0, last.indexOf("."));
+  return pathParts;
+};
 
-// console.log(path.extname(fileName2)) -> for file extention, e.g. ".txt"
+const paths = [
+  ["asynFetch", "server", "server"],
+  ["asynFetch", "server", "routes", "devsRoutes"],
+  ["asynFetch", "server", "routes", "usersRoutes"],
+  ["asynFetch", "server", "controllers", "devsController"],
+  ["asynFetch", "client", "components", "app"],
+  ["asynFetch", "client", "components", "header"],
+];
 
-const fileName1 = 'C:\\Users\\user2020\\CodeFiles\\harmonode\\fetchAsync\\client\\index.js';
-const fileName2 = 'harmonode\\fetchAsync\\client\\index.txt';
-const indexPath = 'C:\\projects\\app\\index.ts';  // example path
+// './routes/usersRoutes'
+const fullBackEndCreator = (originArr, destString) => {
+  const destPathArray = destString.split("/");
+  let pathToNewFile = [];
+  let dots = 0;
 
-const pathParts = indexPath.split(path.sep);
-let last = pathParts.at(-1);    
-if (last.includes('.')) pathParts[pathParts.length - 1]= last.slice(0, last.indexOf('.')) 
+  // if (destPathArray[0] === "..") dots = -2;
+  // else if (destPathArray[0] === ".") dots = -1;
+  // else dots = 0;
 
-console.log(pathParts);
+  for (let el of destPathArray) {
+    if (el === '..') dots -= 2;
+    else if (el === '.') dots -= 1;
+  }
+
+  pathToNewFile = [...originArr.slice(0, dots), ...destPathArray.slice(1)];
+  for (let arr of paths) {
+    if (path.join(...arr) === path.join(...pathToNewFile)) return arr;
+  }
+  return 'no such file';
+};
+
+// export default fullBackEndCreator;
+console.log(fullBackEndCreator(paths[5], '.././client/components/app' ));

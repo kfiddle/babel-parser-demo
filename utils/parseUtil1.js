@@ -3,7 +3,12 @@ import traverse from "@babel/traverse";
 const trav = traverse.default;
 
 const harmonodeParser = (codeString) => {
-  const ast = parse(codeString);
+  // const ast = parse(codeString);
+
+  const ast = parse(codeString, {
+    sourceType: 'module',
+    plugins: ['jsx'],
+  });
   const urlsList = [];
 
   // * if in trouble, allScopedVars should be object, NOT array
@@ -11,14 +16,33 @@ const harmonodeParser = (codeString) => {
 
   trav(ast, {
     enter(path) {
-      if (path.node.type === "VariableDeclarator") {
-        if (path.node.init.type === "Identifier") {
-          allScopedVars[path.node.id.name] = {
-            assignedVar: path.node.init.name,
-          };
-        } else allScopedVars[path.node.id.name] = path.node.init.value;
+      // If node is a variable declarator and has an identifier and initializer
+      if (
+        path.node.type === 'VariableDeclarator' &&
+        path.node.id &&
+        path.node.init
+      ) {
+        // If the init node is an identifier
+        if (path.node.init.type === 'Identifier') {
+          if (path.node.id.name)
+            // Store the name and value of the scoped variable
+            allScopedVars[path.node.id.name] = {
+              assignedVar: path.node.init.name,
+            };
+        } else if (path.node.id.name)
+          // Else, directly store the value of the variable
+          allScopedVars[path.node.id.name] = path.node.init.value;
       }
     },
+    // enter(path) {
+    //   if (path.node.type === "VariableDeclarator") {
+    //     if (path.node.init.type === "Identifier") {
+    //       allScopedVars[path.node.id.name] = {
+    //         assignedVar: path.node.init.name,
+    //       };
+    //     } else allScopedVars[path.node.id.name] = path.node.init.value;
+    //   }
+    // },
   });
 
   // Identifier vs StringLiteral

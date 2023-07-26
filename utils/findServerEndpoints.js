@@ -2,13 +2,11 @@ import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
 const trav = traverse.default;
 
-// * below is DIFFERENT from version in harmonode as of sunday, 23
 
 const endPoints = (codeString) => {
   const ast = parse(codeString);
 
-  const serverEndPoints = [];
-  const routesObj = {};
+  const routesObj = {serverEndPoints: []};
   const importedRoutes = {};
 
   trav(ast, {
@@ -43,13 +41,13 @@ const endPoints = (codeString) => {
         current.callee.property.name === "use"
       ) {
         if (current.arguments[0].value) {
-          serverEndPoints.push(current.arguments[0].value);
+          routesObj.serverEndPoints.push(current.arguments[0].value);
           if (
             current.arguments[1] &&
             current.arguments[1].type === "Identifier"
           ) {
             const nextInLine = current.arguments[1];
-            serverEndPoints.push(findOriginalVal(current.arguments[1].name));
+            routesObj.serverEndPoints.push(findOriginalVal(current.arguments[1].name));
             routesObj[nextInLine.name] = findOriginalVal(nextInLine.name);
           }
         }
